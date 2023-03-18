@@ -1,7 +1,6 @@
 package ca.bc.gov.open.einformation;
 
-import static org.mockito.Mockito.when;
-
+import ca.bc.gov.open.einformation.controllers.CodeValuesController;
 import ca.bc.gov.open.einformation.controllers.HealthController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,42 +17,46 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+
+import static org.mockito.Mockito.when;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class HealthControllerTests {
+public class CodeValuesControllerTests {
     @Mock private ObjectMapper objectMapper;
     @Mock private RestTemplate restTemplate = new RestTemplate();
-    @Mock private HealthController healthController;
+    @Mock private CodeValuesController codeValuesController;
 
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        healthController = Mockito.spy(new HealthController(restTemplate, objectMapper));
+        codeValuesController = Mockito.spy(new CodeValuesController(restTemplate, objectMapper));
     }
 
     @Test
-    public void getHealthTest() throws JsonProcessingException {
-        var req = new GetHealth();
-        var resp = new GetHealthResponse();
+    public void getCodeTableValuesTest() throws JsonProcessingException {
+        var req = new CodeTableValueRequest();
+        var resp = new GetCodeTableValuesResponse();
 
-        resp.setAppid("A");
-        resp.setMethod("A");
-        resp.setStatus("A");
-        resp.setHost("A");
-        resp.setInstance("A");
-        resp.setVersion("A");
-        resp.setCompatibility("A");
-        ResponseEntity<GetHealthResponse> responseEntity =
+        CodeTableValue codeTableValue = new CodeTableValue();
+        CodeTableValue2 codeTableValue2 = new CodeTableValue2();
+        codeTableValue2.setCd("A");
+        codeTableValue2.setDescription("A");
+        codeTableValue2.setListItem("A");
+        codeTableValue.setCodeTableValue(codeTableValue2);
+        resp.setCodeTableValues(codeTableValue);
+        ResponseEntity<GetCodeTableValuesResponse> responseEntity =
                 new ResponseEntity<>(resp, HttpStatus.OK);
 
         // Set up to mock ords response
         when(restTemplate.exchange(
-                        Mockito.anyString(),
+                        Mockito.any(URI.class),
                         Mockito.eq(HttpMethod.GET),
                         Mockito.<HttpEntity<String>>any(),
-                        Mockito.<Class<GetHealthResponse>>any()))
+                        Mockito.<Class<GetCodeTableValuesResponse>>any()))
                 .thenReturn(responseEntity);
 
-        var out = healthController.getHealth(req);
+        var out = codeValuesController.getCodeTableValues(req);
         Assertions.assertNotNull(out);
     }
 }
