@@ -1,0 +1,9 @@
+security:
+  basic-auth:
+    password: ${BASIC_AUTH_PASS}
+    username: ${BASIC_AUTH_USER}
+einformation:
+  host: http://127.0.0.1/
+  password: ${BASIC_AUTH_PASS}
+  username: ${BASIC_AUTH_USER}
+  

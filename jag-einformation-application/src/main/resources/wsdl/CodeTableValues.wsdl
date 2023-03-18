@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="CodeTableValues" targetNamespace="http://brooks/EInformation.Source.FormsLookupServices.ws.provider:CodeTableValues" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapjms="http://www.w3.org/2008/07/soap/bindings/JMS/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://brooks/EInformation.Source.FormsLookupServices.ws.provider:CodeTableValues" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://brooks/EInformation.Source.FormsLookupServices.ws.provider:CodeTableValues" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://brooks/EInformation.Source.FormsLookupServices.ws.provider:CodeTableValues">
+            <xsd:complexType name="CodeTableValueRequest">
+                <xsd:sequence>
+                    <xsd:element name="formId" nillable="true" type="xsd:string"/>
+                    <xsd:element name="queryParamList" nillable="true" type="xsd:string"/>
+                    <xsd:element name="ticket" nillable="true" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getCodeTableValuesResponse">
+                <xsd:sequence>
+                    <xsd:element name="CodeTableValues" nillable="true" type="tns:CodeTableValue"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="CodeTableValue">
+                <xsd:sequence>
+                    <xsd:element name="CodeTableValue" nillable="true" type="tns:CodeTableValue2"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="CodeTableValue2">
+                <xsd:sequence>
+                    <xsd:element name="cd" nillable="true" type="xsd:string"/>
+                    <xsd:element name="description" nillable="true" type="xsd:string"/>
+                    <xsd:element name="list_item" nillable="true" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="CodeTableValueRequest" type="tns:CodeTableValueRequest"/>
+            <xsd:element name="getCodeTableValuesResponse" type="tns:getCodeTableValuesResponse"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="CodeTableValues_PortType_CodeTableValueRequest">
+        <wsdl:part name="parameters" element="tns:CodeTableValueRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CodeTableValues_PortType_getCodeTableValuesResponse">
+        <wsdl:part name="parameters" element="tns:getCodeTableValuesResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="CodeTableValues_PortType">
+        <wsdl:operation name="getCodeTableValues">
+            <wsdl:input message="tns:CodeTableValues_PortType_CodeTableValueRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:CodeTableValues_PortType_getCodeTableValuesResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="EInformation_Source_FormsLookupServices_ws_provider_CodeTableValues_Binder" type="tns:CodeTableValues_PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getCodeTableValues">
+            <soap:operation soapAction="EInformation_Source_FormsLookupServices_ws_provider_CodeTableValues_Binder_getCodeTableValues" style="document"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CodeTableValues">
+        <wsdl:port name="EInformation_Source_FormsLookupServices_ws_provider_CodeTableValues_Port" binding="tns:EInformation_Source_FormsLookupServices_ws_provider_CodeTableValues_Binder">
+            <soap:address location="http://reeks.bcgov:5555/ws/EInformation.Source.FormsLookupServices.ws.provider:CodeTableValues/EInformation_Source_FormsLookupServices_ws_provider_CodeTableValues_Port"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,16 @@
+security:
+  basic-auth:
+    password: ${BASIC_AUTH_PASS}
+    username: ${BASIC_AUTH_USER}
+
+einformation:
+  host: ${ORDS_HOST}
+  username: ${ORDS_USERNAME}
+  password: ${ORDS_PASSWORD}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics,prometheus,health
+

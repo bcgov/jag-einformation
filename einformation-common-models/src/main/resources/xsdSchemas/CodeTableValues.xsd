@@ -1,0 +1,54 @@
+<xsd:schema targetNamespace="http://brooks/EInformation.Source.FormsLookupServices.ws.provider:CodeTableValues" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://brooks/EInformation.Source.FormsLookupServices.ws.provider:CodeTableValues">
+
+    <xsd:element name="CodeTableValueRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="formId" nillable="true" type="xsd:string"/>
+                <xsd:element name="queryParamList" nillable="true" type="xsd:string"/>
+                <xsd:element name="ticket" nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="getCodeTableValuesResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="CodeTableValues" nillable="true" type="tns:CodeTableValue"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="CodeTableValue">
+        <xsd:sequence>
+            <xsd:element name="CodeTableValue" nillable="true" type="tns:CodeTableValue2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CodeTableValue2">
+        <xsd:sequence>
+            <xsd:element name="cd" nillable="true" type="xsd:string"/>
+            <xsd:element name="description" nillable="true" type="xsd:string"/>
+            <xsd:element name="list_item" nillable="true" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="getHealth">
+        <xsd:complexType>
+            <xsd:sequence/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="getHealthResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="appid" nillable="true" type="xsd:string"/>
+                <xsd:element name="method" nillable="true" type="xsd:string"/>
+                <xsd:element name="status" nillable="true" type="xsd:string"/>
+                <xsd:element name="host" nillable="true" type="xsd:string"/>
+                <xsd:element name="instance" nillable="true" type="xsd:string"/>
+                <xsd:element name="version" nillable="true" type="xsd:string"/>
+                <xsd:element name="compatibility" nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
