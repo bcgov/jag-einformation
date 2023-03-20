@@ -56,13 +56,13 @@ Option A) Intellij
 Option B) Jar
 1) Run ```mvn package```
 2) Run ```cd jag-einformation-application```
-3) Run ```java -jar ./target/jag-einformation-application.jar $ENV_VAR$```  (Note that $ENV_VAR$ are environment variables)
+3) Run ```java -jar ./target/jag-einformation-application.jar $ENV_VAR$```  (Note that $ENV\_VAR$ are environment variables)
 
 Option C) Docker
 1) Run ```mvn package```
 2) Run ```cd jag-einformation-application```
 3) Run ```docker build -t einformation-application .```
-4) Run ```docker run -p 8080:8080 einformation-application $ENV_VAR$```  (Note that $ENV_VAR$ are environment variables)
+4) Run ```docker run -p 8080:8080 einformation-application $ENV_VAR$```  (Note that $ENV\_VAR$ are environment variables)
 
 ### Pre Commit
 1) Do not commit \CRLF use unix line enders
