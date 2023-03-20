@@ -1,9 +1,11 @@
 package ca.bc.gov.open.einformation;
 
+import static org.mockito.Mockito.when;
+
 import ca.bc.gov.open.einformation.controllers.CodeValuesController;
-import ca.bc.gov.open.einformation.controllers.HealthController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,10 +18,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.URI;
-
-import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CodeValuesControllerTests {
