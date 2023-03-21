@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -22,11 +25,15 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
+@RestController
+@RequestMapping("/")
 @Slf4j
 public class HealthController {
 
     @Value("${einformation.host}")
     private String host = "https://127.0.0.1/";
+
+    private static String PING_MSG = "Successful Ping to EInformation Application";
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
@@ -35,6 +42,12 @@ public class HealthController {
     public HealthController(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
+    }
+
+    @GetMapping(value = "ping")
+    public String ping() {
+        log.info(PING_MSG);
+        return PING_MSG;
     }
 
     @PayloadRoot(namespace = SoapConfig.SOAP_NAMESPACE, localPart = "getHealth")
