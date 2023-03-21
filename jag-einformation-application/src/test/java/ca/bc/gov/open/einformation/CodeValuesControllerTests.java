@@ -43,15 +43,15 @@ public class CodeValuesControllerTests {
         codeTableValue2.setListItem("A");
         codeTableValue.setCodeTableValue(codeTableValue2);
         resp.setCodeTableValues(codeTableValue);
-        ResponseEntity<GetCodeTableValuesResponse> responseEntity =
-                new ResponseEntity<>(resp, HttpStatus.OK);
+        ResponseEntity<CodeTableValue2> responseEntity =
+                new ResponseEntity<>(codeTableValue2, HttpStatus.OK);
 
         // Set up to mock ords response
         when(restTemplate.exchange(
                         Mockito.any(URI.class),
                         Mockito.eq(HttpMethod.GET),
                         Mockito.<HttpEntity<String>>any(),
-                        Mockito.<Class<GetCodeTableValuesResponse>>any()))
+                        Mockito.<Class<CodeTableValue2>>any()))
                 .thenReturn(responseEntity);
 
         var out = codeValuesController.getCodeTableValues(req);

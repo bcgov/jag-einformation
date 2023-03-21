@@ -1,5 +1,7 @@
 package ca.bc.gov.open.einformation.controllers;
 
+import ca.bc.gov.open.einformation.CodeTableValue;
+import ca.bc.gov.open.einformation.CodeTableValue2;
 import ca.bc.gov.open.einformation.CodeTableValueRequest;
 import ca.bc.gov.open.einformation.GetCodeTableValuesResponse;
 import ca.bc.gov.open.einformation.configuration.SoapConfig;
@@ -49,17 +51,22 @@ public class CodeValuesController {
                         .queryParam("ticket", request.getTicket());
 
         try {
-            HttpEntity<GetCodeTableValuesResponse> resp =
+
+            HttpEntity<CodeTableValue2> resp =
                     restTemplate.exchange(
                             builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
-                            GetCodeTableValuesResponse.class);
-
+                            CodeTableValue2.class);
             log.info(
                     objectMapper.writeValueAsString(
                             new RequestSuccessLog("Request Success", "getCodeTableValues")));
-            return resp.getBody();
+            GetCodeTableValuesResponse getCodeTableValuesResponse =
+                    new GetCodeTableValuesResponse();
+            CodeTableValue codeTableValue = new CodeTableValue();
+            codeTableValue.setCodeTableValue(resp.getBody());
+            getCodeTableValuesResponse.setCodeTableValues(codeTableValue);
+            return getCodeTableValuesResponse;
         } catch (Exception ex) {
             log.error(
                     objectMapper.writeValueAsString(
