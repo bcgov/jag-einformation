@@ -18,12 +18,6 @@ jobs:
     env:
       BASIC_AUTH_USER: ${{ secrets.BASIC_AUTH_USER }}
       BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
-      OBJ_STORE_PSW: ${{secrets.OBJ_STORE_PSW}}
-      OBJ_STORE_APP_ID: ${{secrets.OBJ_STORE_APP_ID}}
-      OBJ_STORE_DB_ID: ${{secrets.OBJ_STORE_DB_ID}}
-      OBJ_STORE_USER: ${{secrets.OBJ_STORE_USER}}
-      OBJ_STORE_VERSION: ${{secrets.OBJ_STORE_VERSION}}
-      OBJ_STORE_TICKET_LIFETIME: ${{secrets.OBJ_STORE_TICKET_LIFETIME}}
 
     steps:
       - name: Checkout code

@@ -23,13 +23,6 @@ jobs:
       CC_TEST_REPORTER_ID: 64e7159299a01cac27d5afd1659d66e73061eb40ac9d2082d7bc67ead222f962
       BASIC_AUTH_USER: ${{ secrets.BASIC_AUTH_USER }}
       BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
-      OBJ_STORE_PSW: ${{secrets.OBJ_STORE_PSW}}
-      OBJ_STORE_APP_ID: ${{secrets.OBJ_STORE_APP_ID}}
-      OBJ_STORE_DB_ID: ${{secrets.OBJ_STORE_DB_ID}}
-      OBJ_STORE_USER: ${{secrets.OBJ_STORE_USER}}
-      OBJ_STORE_VERSION: ${{secrets.OBJ_STORE_VERSION}}
-      OBJ_STORE_TICKET_LIFETIME: ${{secrets.OBJ_STORE_TICKET_LIFETIME}}
-
       ACTION_DEBUG: true
 
     # Steps represent a sequence of tasks that will be executed as part of the job
