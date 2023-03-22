@@ -78,9 +78,12 @@ jobs:
       - name: Run jacoco report
         run: mvn -ntp verify
 
+      - name: Fix Jacoco Report Format for CC
+        run: sed -e 's/<[\/]\?group[^>]*>//g' einformation-code-coverage/target/site/jacoco-aggregate/jacoco.xml > einformation-code-coverage/target/site/jacoco-aggregate/jacoco-codeclimatecompat.xml
+
         # Formatting the Code Coverage Report
       - name: Format the coverage report
-        run: JACOCO_SOURCE_PATH="jag-einformation-application/src/main/java einformation-common-models/target/generated-sources/xjc" ./cc-test-reporter format-coverage einformation-code-coverage/target/site/jacoco-aggregate/jacoco.xml --input-type jacoco -o einformation-code-coverage/target/site/jacoco-aggregate/codeclimate.json
+        run: JACOCO_SOURCE_PATH="jag-einformation-application/src/main/java einformation-common-models/target/generated-sources/xjc" ./cc-test-reporter format-coverage einformation-code-coverage/target/site/jacoco-aggregate/jacoco-codeclimatecompat.xml --input-type jacoco -o einformation-code-coverage/target/site/jacoco/codeclimate.json
 
         # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
