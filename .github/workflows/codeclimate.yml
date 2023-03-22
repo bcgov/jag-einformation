@@ -90,7 +90,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: einformation-coverage-report
-          path: ./target/site/jacoco/codeclimate.json
+          path: einformation-code-coverage/target/site/jacoco/codeclimate.json
 
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
