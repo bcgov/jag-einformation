@@ -33,6 +33,7 @@
     <modules>
         <module>jag-einformation-application</module>
         <module>einformation-common-models</module>
+        <module>einformation-code-coverage</module>
     </modules>
 
     <build>
