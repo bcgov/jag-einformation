@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>jag-einformation-application</artifactId>
-    <version>1.0</version>
+    <version>1.0.0</version>
     <name>jag-einformation-application</name>
     <description>jag-einformation-application</description>
     <properties>

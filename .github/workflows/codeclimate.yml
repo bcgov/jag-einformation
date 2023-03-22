@@ -75,23 +75,23 @@ jobs:
           #echo "::set-env name=GIT_BRANCH::main"
         if: env.GIT_BRANCH == 'refs/heads/main'
 
-      - name: Run Maven Test
-        run: mvn -ntp test
-
       - name: Run jacoco report
-        run: mvn -ntp jacoco:report
+        run: mvn -ntp verify
+
+      - name: Fix Jacoco Report Format for CC
+        run: sed -e 's/<[\/]\?group[^>]*>//g' einformation-code-coverage/target/site/jacoco-aggregate/jacoco.xml > einformation-code-coverage/target/site/jacoco-aggregate/jacoco-codeclimatecompat.xml
 
         # Formatting the Code Coverage Report
       - name: Format the coverage report
-        run: JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage ./target/site/jacoco/jacoco.xml -t jacoco -o ./target/site/jacoco/codeclimate.json
+        run: JACOCO_SOURCE_PATH="jag-einformation-application/src/main/java einformation-common-models/target/generated-sources/xjc" ./cc-test-reporter format-coverage einformation-code-coverage/target/site/jacoco-aggregate/jacoco-codeclimatecompat.xml --input-type jacoco -o einformation-code-coverage/target/site/jacoco/codeclimate.json
 
         # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
         uses: actions/upload-artifact@v3.1.1
         with:
           name: einformation-coverage-report
-          path: ./target/site/jacoco/codeclimate.json
+          path: einformation-code-coverage/target/site/jacoco/codeclimate.json
 
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
-        run: ./cc-test-reporter upload-coverage -i ./target/site/jacoco/codeclimate.json
+        run: ./cc-test-reporter upload-coverage -i einformation-code-coverage/target/site/jacoco/codeclimate.json
