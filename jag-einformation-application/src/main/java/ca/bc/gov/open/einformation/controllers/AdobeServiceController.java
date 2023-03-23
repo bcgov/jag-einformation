@@ -121,7 +121,7 @@ public class AdobeServiceController {
             throw new ORDSException();
         }
 
-        response.setContentType("text/xml");
+        response.setContentType("text/html");
         OutputStream os = response.getOutputStream();
         String formCode = "PCR822AT";
         String formProperty = null;
