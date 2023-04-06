@@ -26,7 +26,7 @@ parameters:
   description: The OpenShift namespace prefix
   required: false
   # Below value must be changed as per gold cluster oc nameplate
-  value: bf8ee6
+  value: b59d8b
   
 - name: OC_ENV
   description: The OpenShift environment, ie dev, test or prod
@@ -37,16 +37,12 @@ parameters:
   required: false
   value: java
 
-- name: API_NAME
-  description: The application name that each component is part of
-  required: false
-  value: jag-einformation
-
 - name: DNS
   description: The application name that each component is part of
   required: false
   # Below value must be changed as per gold cluster certificate/DNS
   value: apps.gold.devops.gov.bc.ca
+
 - name: AUTH_HEADER
   description: The http Authorization header required for performing livenessProbe & readinessProbe in deployment config during container start.
   required: true
@@ -82,59 +78,18 @@ objects:
             imagePullPolicy: Always
             ports:
               - containerPort: 8080
-            env:
-            - name: BASIC_AUTH_USER
-              valueFrom:
-                secretKeyRef:
-                  name: einformation-application-secrets
-                  key: BASIC_AUTH_USER
-            - name: BASIC_AUTH_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: einformation-application-secrets
-                  key: BASIC_AUTH_PASS
-            - name: SPRING_PROFILES_ACTIVE
-              valueFrom:
-                secretKeyRef:
-                  name: einformation-application-secrets
-                  key: SPRING_PROFILE
-            - name: SPLUNK_HTTP_URL
-              valueFrom:
-                secretKeyRef:
-                  name: einformation-splunk-config
-                  key: SPLUNK_HTTP_URL
-            - name: SPLUNK_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: einformation-splunk-config
-                  key: SPLUNK_TOKEN
-            - name: SPLUNK_INDEX
-              valueFrom:
-                secretKeyRef:
-                  name: einformation-splunk-config
-                  key: SPLUNK_INDEX
-            - name: ORDS_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: einformation-application-secrets
-                  key: ORDS_HOST
-            - name: ORDS_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: einformation-application-secrets
-                  key: ORDS_USERNAME
-            - name: ORDS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: einformation-application-secrets
-                  key: ORDS_PASSWORD
+            envFrom:
+              - secretRef:
+                  name: ${COMPONENT_NAME}-application-secrets
+              - secretRef:
+                  name: ${COMPONENT_NAME}-splunk-config
             resources:
               limits:
-                cpu: 200m
-                memory: 512Mi
+                cpu: 100m
+                memory: 250Mi
               requests:
-                cpu: 50m
-                memory: 256Mi
+                cpu: 40m
+                memory: 200Mi
             livenessProbe:
               httpGet:
                 path: "/actuator/health"
@@ -143,9 +98,9 @@ objects:
                 httpHeaders:
                 - name: Authorization
                   value: ${AUTH_HEADER}
-              initialDelaySeconds: 100
+              initialDelaySeconds: 120
               timeoutSeconds: 30
-              periodSeconds: 10
+              periodSeconds: 30
               successThreshold: 1
               failureThreshold: 3
             readinessProbe:
@@ -156,9 +111,9 @@ objects:
                 httpHeaders:
                 - name: Authorization
                   value: ${AUTH_HEADER}
-              initialDelaySeconds: 100
+              initialDelaySeconds: 120
               timeoutSeconds: 30
-              periodSeconds: 10
+              periodSeconds: 30
               successThreshold: 1
               failureThreshold: 3
     triggers:
@@ -203,7 +158,7 @@ objects:
     # balance algorithm
     haproxy.router.openshift.io/balance: roundrobin
   spec:
-    host: ${API_NAME}-${OC_NAMESPACE}-${OC_ENV}.${DNS}
+    host: ${COMPONENT_NAME}-${OC_NAMESPACE}-${OC_ENV}.${DNS}
     to:
       kind: Service
       name: ${COMPONENT_NAME}

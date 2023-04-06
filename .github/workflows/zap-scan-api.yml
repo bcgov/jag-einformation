@@ -20,6 +20,6 @@ jobs:
           format: soap
           docker_name: 'owasp/zap2docker-stable'
           issue_title: 'ZAP Scan Report - WebCATSDocumentStorageService API'
-          target: '${{ secrets.JAG_EINFORMATION_API_RouteUrl }}/ws/EINFORMATION.Source.ws.provider:WebCATSDocumentStorageService?WSDL'
+          target: '${{ secrets.JAG_EINFORMATION_API_RouteUrl }}/ws/EInformation.Source.FormsLookupServices.ws.provider:CodeTableValues?WSDL'
           fail_action: true
           cmd_options: '-c "zaprules.conf" -S -z "-configFile /zap/wrk/zapoptions.prop"'
