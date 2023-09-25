@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jre-jammy
+FROM eclipse-temurin:17-jre-alpine
 
 COPY ./jag-einformation-application/target/jag-einformation-application.jar jag-einformation-application.jar
 
