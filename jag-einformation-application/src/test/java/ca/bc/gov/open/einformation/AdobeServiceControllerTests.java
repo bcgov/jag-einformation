@@ -1,5 +1,6 @@
 package ca.bc.gov.open.einformation;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.bc.gov.open.einformation.controllers.AdobeServiceController;
@@ -8,7 +9,10 @@ import ca.bc.gov.open.einformation.models.SetXMLDataResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
-import javax.servlet.http.HttpServletResponse;
+
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -61,7 +65,9 @@ public class AdobeServiceControllerTests {
                         Mockito.<Class<GetFormPropertyResponse>>any()))
                 .thenReturn(responseEntity2);
 
-        HttpServletResponse response = new MockHttpServletResponse();
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        ServletOutputStream servletOutputStream = mock(ServletOutputStream.class);
+        when(response.getOutputStream()).thenReturn(servletOutputStream);
         adobeServiceController.adobeXMLExtraction("A", response);
     }
 }

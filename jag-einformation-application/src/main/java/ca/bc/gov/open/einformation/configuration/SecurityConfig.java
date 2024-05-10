@@ -27,19 +27,28 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/error")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic()
-                .authenticationEntryPoint(authenticationEntryPoint)
-                .and()
-                .csrf()
-                .disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeHttpRequests(
+                authorizeRequests -> {
+                    authorizeRequests.anyRequest().authenticated();
+                });
+
+        http.sessionManagement(
+                httpSecuritySessionManagementConfigurer -> {
+                    httpSecuritySessionManagementConfigurer.sessionCreationPolicy(
+                            SessionCreationPolicy.STATELESS);
+                });
+
+        http.httpBasic(
+                httpSecurityHttpBasicConfigurer -> {
+                    httpSecurityHttpBasicConfigurer.authenticationEntryPoint(
+                            authenticationEntryPoint);
+                });
+
+        http.csrf(
+                httpSecurityCsrfConfigurer -> {
+                    httpSecurityCsrfConfigurer.disable();
+                });
+
         return http.build();
     }
 
@@ -49,7 +58,6 @@ public class SecurityConfig {
                 User.builder()
                         .username(userName)
                         .password(passwordEncoder().encode(password))
-                        .roles("Admin")
                         .build();
         return new InMemoryUserDetailsManager(user);
     }
