@@ -87,7 +87,7 @@ jobs:
 
         # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: einformation-coverage-report
           path: einformation-code-coverage/target/site/jacoco/codeclimate.json
