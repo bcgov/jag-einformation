@@ -93,7 +93,7 @@ public class AdobeServiceController {
     public void adobeXMLExtraction(@RequestBody String xmlString, HttpServletResponse response)
             throws IOException {
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(host + "xml-data");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(host + "xml-data");
 
         byte[] xmlByteArr = xmlString.getBytes(StandardCharsets.UTF_8);
         SetXMLDataRequest setXMLDataRequest = new SetXMLDataRequest(xmlByteArr);
