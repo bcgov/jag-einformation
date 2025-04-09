@@ -66,6 +66,11 @@ jobs:
           echo "Release Environment: ${{ github.event.inputs.imageTargetEnv }}"
           echo "Release Version: ${{ env.releaseVersion }}"
           echo "Release Git Sha: ${{env.gitsha}}"
+
+      - name: Install oc
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          oc: latest
       
         #Login to Openshift using OC Tools SA and Token for image stream tagging changes - Kamloops (OC PROD)
       - name: Authenticate OC Tools SA - Kamloops (OC PROD)
