@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-name: CodeClimate Workflow
+name: Build and Unit Test Workflow
 
 # Triggers that controls when the workflow will run
 on:
@@ -20,7 +20,6 @@ jobs:
 
     env:
       FILE_COUNTER: 0
-      CC_TEST_REPORTER_ID: 64e7159299a01cac27d5afd1659d66e73061eb40ac9d2082d7bc67ead222f962
       BASIC_AUTH_USER: ${{ secrets.BASIC_AUTH_USER }}
       BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
       ACTION_DEBUG: true
@@ -38,60 +37,7 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      # Get Code Climate binary
-      - name: Download Code Climate Binary
-        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-
-      # Permissions applied to the Code Climate Executable
-      - name: Apply executable perms to Code Climate Binary
-        run: chmod +x ./cc-test-reporter
-
-      # Before build
-      - name: Before build
-        run: ./cc-test-reporter before-build
-
-      # Set required Git env vars for either pull request
-      - name: Set ENV for codeclimate (pull_request)
-        run: |
-          echo "GIT_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
-          echo "GIT_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
-          #echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
-          #echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
-        if: github.event_name == 'pull_request'
-
-      # Set required Git env vars for a push to main
-      - name: Set ENV for codeclimate (push)
-        run: |
-          echo "GIT_BRANCH=$GITHUB_REF" >> $GITHUB_ENV
-          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
-          #echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
-          #echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
-        if: github.event_name == 'push'
-
-      # Trimming the ref to main in order to publish correct report
-      - name: Set ref/head/main to main
-        run: |
-          echo "GIT_BRANCH=master" >> $GITHUB_ENV
-          #echo "::set-env name=GIT_BRANCH::main"
-        if: env.GIT_BRANCH == 'refs/heads/main'
-
-      - name: Run jacoco report
+      - name: Run Build/Unit Test
         run: mvn -ntp verify
 
-      - name: Fix Jacoco Report Format for CC
-        run: sed -e 's/<[\/]\?group[^>]*>//g' einformation-code-coverage/target/site/jacoco-aggregate/jacoco.xml > einformation-code-coverage/target/site/jacoco-aggregate/jacoco-codeclimatecompat.xml
 
-        # Formatting the Code Coverage Report
-      - name: Format the coverage report
-        run: JACOCO_SOURCE_PATH="jag-einformation-application/src/main/java einformation-common-models/target/generated-sources/xjc" ./cc-test-reporter format-coverage einformation-code-coverage/target/site/jacoco-aggregate/jacoco-codeclimatecompat.xml --input-type jacoco -o einformation-code-coverage/target/site/jacoco/codeclimate.json
-
-        # Upload JSON for debugging purposes
-      - name: Upload JSON for debugging purposes
-        uses: actions/upload-artifact@v4
-        with:
-          name: einformation-coverage-report
-          path: einformation-code-coverage/target/site/jacoco/codeclimate.json
-
-      # Upload total coverage report to Code Climate
-      - name: Upload coverage report to Code Climate
-        run: ./cc-test-reporter upload-coverage -i einformation-code-coverage/target/site/jacoco/codeclimate.json

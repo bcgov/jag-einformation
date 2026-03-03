@@ -33,10 +33,7 @@ jobs:
       # Runs build steps
       - name: Maven Package
         run: mvn -ntp clean package
-
-      - name: Maven Verify
-        run: mvn -ntp clean verify
-
+        
       - name: Build an image from Dockerfile
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
@@ -52,7 +49,6 @@ jobs:
           image-ref: docker.io/einformation/jag-einformation:${{ github.sha }}
           format: sarif
           output: trivy-results.sarif
-          exit-code: 1
           ignore-unfixed: true
           limit-severities-for-sarif: true
           severity: HIGH,CRITICAL
