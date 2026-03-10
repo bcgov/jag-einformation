@@ -5,7 +5,7 @@
     <parent>
         <artifactId>jag-einformation</artifactId>
         <groupId>ca.bc.gov.open</groupId>
-        <version>1.0.0</version>
+        <version>2.0.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,7 +14,7 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <commons.io.version>1.4</commons.io.version>
+        <commons.io.version>2.14.0</commons.io.version>
     </properties>
 
     <dependencies>
