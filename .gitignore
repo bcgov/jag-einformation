@@ -42,3 +42,6 @@ cc-test-reporter
 /comparison-tool/results/*.txt
 
 /TestErrors.zip
+
+# Build files
+*.versionsBackup

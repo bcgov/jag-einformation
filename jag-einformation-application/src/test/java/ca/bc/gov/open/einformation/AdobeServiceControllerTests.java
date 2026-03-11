@@ -1,17 +1,10 @@
 package ca.bc.gov.open.einformation;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import ca.bc.gov.open.einformation.controllers.AdobeServiceController;
 import ca.bc.gov.open.einformation.models.GetFormPropertyResponse;
 import ca.bc.gov.open.einformation.models.SetXMLDataResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.net.URI;
-
 import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,8 +16,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.net.URI;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AdobeServiceControllerTests {

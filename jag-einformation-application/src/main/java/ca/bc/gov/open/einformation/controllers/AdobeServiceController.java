@@ -3,11 +3,6 @@ package ca.bc.gov.open.einformation.controllers;
 import ca.bc.gov.open.einformation.exceptions.ORDSException;
 import ca.bc.gov.open.einformation.models.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServletResponse;
-
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +11,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @RestController
