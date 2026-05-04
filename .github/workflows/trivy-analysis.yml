@@ -30,23 +30,16 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      # Runs build steps
-      - name: Maven Package
-        run: mvn -ntp clean package
-        
       - name: Build an image from Dockerfile
-        env:
-          COMPOSE_DOCKER_CLI_BUILD: 1
-          DOCKER_BUILDKIT: 1
         run: |
-          docker build -t docker.io/einformation/jag-einformation:${{ github.sha }} .
+          docker build -t jag-einformation .
 
       #Run Vulnerability Scan usinig Trivy scanner
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: image
-          image-ref: docker.io/einformation/jag-einformation:${{ github.sha }}
+          image-ref: jag-einformation
           format: sarif
           output: trivy-results.sarif
           ignore-unfixed: true
