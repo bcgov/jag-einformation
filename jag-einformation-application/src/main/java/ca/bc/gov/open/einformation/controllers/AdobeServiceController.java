@@ -155,7 +155,7 @@ public class AdobeServiceController {
         }
 
         UriComponentsBuilder getFormPropertyBuilder =
-                UriComponentsBuilder.fromHttpUrl(host + "form-property")
+                UriComponentsBuilder.fromUriString(host + "form-property")
                         .queryParam("formCode", formCode)
                         .queryParam("formProperty", formProperty);
         HttpEntity<GetFormPropertyResponse> formPropResp = null;
