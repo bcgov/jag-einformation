@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,10 +30,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(
-                authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/actuator/**").permitAll()
-                            .anyRequest().authenticated();
-                });
+                authorizeRequests -> authorizeRequests
+                        .requestMatchers("/actuator/**").permitAll()
+                        .anyRequest().authenticated());
 
         http.sessionManagement(
                 httpSecuritySessionManagementConfigurer -> {
@@ -47,9 +47,7 @@ public class SecurityConfig {
                 });
 
         http.csrf(
-                httpSecurityCsrfConfigurer -> {
-                    httpSecurityCsrfConfigurer.disable();
-                });
+                AbstractHttpConfigurer::disable);
 
         return http.build();
     }

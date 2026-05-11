@@ -45,7 +45,7 @@ public class CodeValuesController {
             @RequestPayload CodeTableValueRequest request) throws JsonProcessingException {
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(host + "code-table-values")
+                UriComponentsBuilder.fromUriString(host + "code-table-values")
                         .queryParam("formId", request.getFormId())
                         .queryParam("queryParamList", request.getQueryParamList())
                         .queryParam("ticket", request.getTicket());

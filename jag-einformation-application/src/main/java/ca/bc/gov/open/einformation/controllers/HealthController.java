@@ -54,7 +54,7 @@ public class HealthController {
     @ResponsePayload
     public GetHealthResponse getHealth(@RequestPayload GetHealth empty)
             throws JsonProcessingException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(host + "health");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(host + "health");
 
         try {
             HttpEntity<GetHealthResponse> resp =
