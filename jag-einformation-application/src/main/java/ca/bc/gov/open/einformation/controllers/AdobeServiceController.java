@@ -166,6 +166,9 @@ public class AdobeServiceController {
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             GetFormPropertyResponse.class);
+            log.info("formCode" + formCode);
+            log.info("formProperty" + formProperty);
+            log.info(formPropResp.getBody().getOutPropertyValue());
             log.info(
                     objectMapper.writeValueAsString(
                             new RequestSuccessLog(
