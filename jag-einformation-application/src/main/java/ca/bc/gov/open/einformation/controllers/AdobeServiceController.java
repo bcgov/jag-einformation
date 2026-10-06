@@ -96,6 +96,11 @@ public class AdobeServiceController {
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(host + "xml-data");
 
+        log.info("DEBUG TO BE REMOVED");
+        log.info(xmlString);
+        log.info("END OF REQUEST XML");
+
+
         byte[] xmlByteArr = xmlString.getBytes(StandardCharsets.UTF_8);
         SetXMLDataRequest setXMLDataRequest = new SetXMLDataRequest(xmlByteArr);
         HttpEntity<SetXMLDataRequest> payload =
@@ -133,10 +138,12 @@ public class AdobeServiceController {
             case "success":
                 response.setContentLength(SUCCESS_HTML.length());
                 os.write(SUCCESS_HTML.getBytes(StandardCharsets.UTF_8));
+                os.flush();
                 return;
             case "fail":
                 response.setContentLength(FAIL_HTML.length());
                 os.write(FAIL_HTML.getBytes(StandardCharsets.UTF_8));
+                os.flush();
                 return;
             case "record_exists":
                 response.setContentLength(RECORD_EXISTS_HTML.length());
@@ -166,8 +173,8 @@ public class AdobeServiceController {
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             GetFormPropertyResponse.class);
-            log.info("formCode" + formCode);
-            log.info("formProperty" + formProperty);
+            log.info("formCode " + formCode);
+            log.info("formProperty " + formProperty);
             log.info(formPropResp.getBody().getOutPropertyValue());
             log.info(
                     objectMapper.writeValueAsString(
@@ -186,6 +193,7 @@ public class AdobeServiceController {
         response.setContentLength(OLD_FORM_HTML.length());
         os.write(OLD_FORM_HTML.getBytes(StandardCharsets.UTF_8));
         os.flush();
+        os.close();
         return;
     }
 }
